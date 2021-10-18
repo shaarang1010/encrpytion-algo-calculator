@@ -1,0 +1,797 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}" />
+  <title>NSW Calculator</title>
+  <style>
+    .calculator-form button {
+      /*width: 47px;*/
+      margin: 1px;
+      font-weight: 1000;
+    }
+
+    .btn-result {
+      /*padding-right: 87px; */
+      width: 50%;
+      align-items: center;
+      justify-content: center;
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    .btn-zero {
+      /*padding-right: 87px;*/
+      width: 50%;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="{{url_for('static', filename = 'js/scripts.js')}}"></script>
+  <!-- bootstrap toggle-->
+  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+  <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <!-- ======================================================== NAV-BAR ==================================================================== -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">CSE3/4NSW</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://lms.latrobe.edu.au">LMS</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://csetools.latrobe.edu.au">CSEtools</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">NSW Calculator</h1>
+        <p class="lead">Encryption calculator for students</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div id="accordion">
+
+
+          <!-- ======================================================== AES ENCRYPTION ==================================================================== -->
+          <div class="card">
+            <div class="card-header" id="headingFour">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour"
+                  aria-expanded="false" aria-controls="collapseFour">
+                  AES Encryption
+                </button>
+              </h5>
+            </div>
+            <div id="collapseFour" class="collapse show" aria-labelledby="headingFour" data-parent="#accordion">
+              <div class="card-body">
+                <form>
+                  <div class="step1">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <h3>Step 1: Generate Cipher Text</h3>
+                        <p>Enter the message and secret key below and press generate</p>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-8">
+                        <label for="aes-message">Enter Message</label>
+                        <input type="text" class="form-control" id="aes-message" aria-describedby="aes-message"
+                          placeholder="">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-8">
+                        <label for="aes-password">Enter Secret Key</label>
+                        <input type="text" class="form-control" id="aes-password" aria-describedby="aes-password"
+                          placeholder="">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-4">
+                        <div class="btn-group">
+                          <button type="button" id="aes-mode" class="btn btn-primary dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Choose Mode
+                          </button>
+                          <div class="dropdown-menu" id="aes-dropdown">
+                            <a class="dropdown-item" value="cbc">CBC</a>
+                            <a class="dropdown-item" value="cbf">CBF</a>
+                            <a class="dropdown-item" value="ctr">CTR</a>
+                            <a class="dropdown-item" value="ctr">OFB</a>
+                            <!-- <div class="dropdown-divider"></div> -->
+                            <a class="dropdown-item" href="#">Separated link</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-6">
+                        <button type="button" class="btn btn-primary" onclick=" aesEncrypt();">Generate</button>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-md-8">
+                        <label for="aes-cipher">
+                          Cipher Text:
+                        </label>
+                        <input type="text" class="form-control" id="aes-cipher" name="aes-cipher" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="step2">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <h3>Step 2: Decrypt Cipher Text</h3>
+                        <p>Enter secret key below to decrypt cipher</p>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-8">
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="aes-cipher-decrypt"
+                            placeholder="Enter secret key">
+                          <div class="input-group-append">
+                            <button class="btn btn-primary" type="button" id="aes-decrypt"
+                              onclick=" aesDecrypt();">Decrypt</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-8">
+                        <label for="decryptaes-message">
+                          Decrpyted Message:
+                        </label>
+                        <input type="text" class="form-control" id="decryptaes-message" name="decryptaes-message"
+                          readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-4">
+                      <button type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target=".bd-example-modal-lg">Show Working</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- ======================================================== TRIPLE DES ENCRYPTION ==================================================================== -->
+          <div class="card">
+            <div class="card-header" id="headingFive">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive"
+                  aria-expanded="false" aria-controls="collapseFive">
+                  Triple DES Encryption
+                </button>
+              </h5>
+            </div>
+            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+              <div class="card-body">
+                <form>
+                  <!--   <div class="form-group row">
+                                      <div class="col-md-8">
+                                        <label for="result">Result</label>
+                                        <textarea class="form-control" type="text" id="primeresult" placeholder="" readonly rows="5"></textarea> 
+                                      </div>
+                                    </div> -->
+                  <div class="step1">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <h3>Step 1: Generate Cipher Text</h3>
+                        <p>Enter the message and secret key below and press generate</p>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-8">
+                        <label for="des-message">Enter Message</label>
+                        <input type="text" class="form-control" id="des-message" aria-describedby="des-message"
+                          placeholder="">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-6">
+                        <label for="des-password1">Enter Secret Key 1</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="des-password1" aria-describedby="des-password1"
+                            placeholder="">
+                          <!-- <div class="input-group-append">
+                                  <button class="btn btn-primary" type="button" id="des-key1" onclick="desEncrypt(1)">Encrypt</button>
+                                </div> -->
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-6">
+                        <label for="des-password2">Enter Secret Key 2</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="des-password2" aria-describedby="des-password2"
+                            placeholder="">
+                          <!-- <div class="input-group-append">
+                                  <button class="btn btn-primary" type="button" id="des-key2" onclick="desDecrypt()">Decrypt</button>
+                                </div> -->
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-6">
+                        <label for="des-password3">Enter Secret Key 3</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="des-password3" aria-describedby="des-password3"
+                            placeholder="">
+                          <!--  <div class="input-group-append">
+                                  <button class="btn btn-primary" type="button" id="des-key3" onclick="desEncrypt(3)">Encrypt</button>
+                                </div> -->
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-md-4">
+                        <button class="btn btn-primary btn-md" type="button" id="des_encrypt"
+                          onclick=" desEncrypt()">Encrypt Message</button>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-md-8">
+                        <label for="des-cipher">
+                          Cipher Text:
+                        </label>
+                        <input type="text" class="form-control" id="des-cipher" name="des-cipher" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="step2">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <h3>Step 2: Decrypt Cipher Text</h3>
+                        <p>Click on Decrypt to decipher the text</p>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-8">
+                        <label for="decryptdes-message">
+                          Decrpyted Message:
+                        </label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="decryptdes-message" name="decryptdes-message"
+                            readonly>
+                          <div class="input-group-append">
+                            <button class="btn btn-primary" type="button" id="des-decrypt"
+                              onclick=" tripleDesDecrypt()">Decrypt</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-4">
+                      <button type="button" class="btn btn-primary" id="aesShowWorking" data-toggle="modal"
+                        data-target=".bd-example-modal-lg">Show Working</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- ======================================================== RSA ENCRYPTION ==================================================================== -->
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
+                  aria-expanded="false" aria-controls="collapseThree">
+                  RSA Encryption
+                </button>
+              </h5>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+              <div class="card-body rsa-body">
+                <!-- step 1 div-->
+                <form>
+                  <div class="step1">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <h3>Step 1: Generate Private and Public keys</h3>
+                        <p>Enter two prime numbers below and press calculate</p>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-md-2">
+                        <label for="pvalue">p</label>
+                        <input type="text" class="form-control" id="pvalue">
+                      </div>
+                      <div class="col-md-2">
+                        <label for="qvalue">q</label>
+                        <input type="text" class="form-control" id="qvalue">
+                      </div>
+                      <div class="col-md-4" style="padding-top:30px;">
+                        <button type="button" class="btn btn-primary" id="generateKeyBtn"
+                          onclick=" rsa_generate()">Calculate</button>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-8">
+                        <label>Some prime numbers: 11, 13, 17, 19, 23, 29, 191, 193, 197, 199, etc.</label>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <table class="table">
+                        <thead class="thead-dark">
+                          <tr>
+                            <th scope="col" style="width: 10%">Variable</th>
+                            <th scope="col" style="width: 10%">Value</th>
+                            <th scope="col" style="width: 15%">Name</th>
+                            <th scope="col" style="width: 15%">Formula</th>
+                            <th scope="col" style="width: 50%">Description</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">N</th>
+                            <td><input type="text" class="form-control" value="" id="nvalue" readonly></td>
+                            <td>Modulus</td>
+                            <td>N = p*q</td>
+                            <td> Product of 2 prime numbers</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">L</th>
+                            <td><input type="text" class="form-control" value="" id="lvalue" readonly></td>
+                            <td>Length</td>
+                            <td>L = (p-1) * (q-1)</td>
+                            <td> </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">E</th>
+                            <td><input type="text" class="form-control" value="" id="evalue"></td>
+                            <td>Encryption Key</td>
+                            <td> </td>
+                            <td id="encryptdesc">A number between 1 and L that is coprime with L and N</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">D</th>
+                            <td><input type="text" class="form-control" value="" id="dvalue"></td>
+                            <td>Decryption Key</td>
+                            <td>D * E mod L = 1</td>
+                            <td id="decryptdesc">Remainder of product of D and E when divided by L should be 1(D * E % L
+                              = 1)</td>
+                          </tr>
+
+                        </tbody>
+                      </table>
+
+                      <div class="form-group row">
+                        <div class="col-md-12">
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">Private Key (E,N):</span>
+                            </div>
+                            <input type="text" class="form-control" id="pvkey">
+                          </div>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">Public Key (D,N):</span>
+                            </div>
+                            <input type="text" class="form-control" id="pbkey">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="step2">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <h3>Step 2: Encrypt a message</h3>
+                        <p>Enter a message below to encrypt</p>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-8">
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="encrpyt-text" placeholder="Enter a message">
+                          <div class="input-group-append">
+                            <button class="btn btn-primary" type="button" id="encryptMessage"
+                              onclick=" encrypt_message()">Encrypt</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-8">
+                        <label for="ascii-message">
+                          Message converted to ASCII code:
+                        </label>
+                        <input type="text" class="form-control" id="ascii-message" name="ascii-message" readonly>
+                        <small>
+                          Encrypted message: Message^E % N (PowerMod can be used to calculate this very fast. Formula is
+                          applied on ASCII code of each character)
+                        </small>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-8">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Encrypted Message</span>
+                          </div>
+                          <input type="text" class="form-control" id="message-encrypted">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="step3">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <h3>Step 3: Decrypt a message</h3>
+                        <p>Enter encrypted message (cipher)</p>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-8">
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="decrpyt-text"
+                            placeholder="Enter an encrypted message">
+                          <div class="input-group-append">
+                            <button class="btn btn-primary" type="button" id="decryptMessage"
+                              onclick=" decrypt_message()">Decrypt</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-8">
+                        <label for="ascii-message">
+                          Message decrypted to ASCII code:
+                        </label>
+                        <input type="text" class="form-control" id="decryptascii-message" name="decryptascii-message"
+                          readonly>
+                        <small>
+                          Decrypted message: Encrypted message ^ D % N (PowerMod can be used to calculate this very
+                          fast. Formula is applied on ASCII code of each character)
+                        </small>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-8">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Decrypted Message</span>
+                          </div>
+                          <input type="text" class="form-control" id="message-decrypted">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- ======================================================== SIMPLE ARITHMATIC CALCULATOR ==================================================================== -->
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                  aria-controls="collapseOne">
+                  Arithmatic Calculator
+                </button>
+              </h5>
+            </div>
+
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="card">
+                      <h5 class="card-header">Simple Arithmatic Calculator</h5>
+                      <div class="card-body">
+                        <p class="card-text"></p>
+                        <div class="calculator-form">
+                          <div class="form-group row">
+                            <div class="col-md-8">
+                              <input type="text" class="form-control" id="resultText" placeholder="" readonly>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <div class="col-md-8">
+                              <button class="btn btn-primary col-sm-2" value="7" onclick="calc(this)">7</button>
+                              <button class="btn btn-primary col-sm-2" value="8" onclick="calc(this)">8</button>
+                              <button class="btn btn-primary col-sm-2" value="9" onclick="calc(this)">9</button>
+                              <button class="btn btn-danger col-sm-2" value="ac" onclick="cleartext()">AC</button>
+                              <button class="btn btn-danger col-sm-2" value="ce" onclick="cleartext()">CE</button>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <div class="col-md-8">
+                              <button class="btn btn-primary col-sm-2" value="4" onclick=" calc(this)">4</button>
+                              <button class="btn btn-primary col-sm-2" value="5" onclick=" calc(this)">5</button>
+                              <button class="btn btn-primary col-sm-2" value="6" onclick=" calc(this)">6</button>
+                              <button class="btn btn-warning col-sm-2" value="/" onclick=" calc(this)">/</button>
+                              <button class="btn btn-warning col-sm-2" value="*" onclick=" calc(this)">*</button>
+                            </div>
+                          </div>
+
+                          <div class="form-group row">
+                            <div class="col-md-8">
+                              <button class="btn btn-primary col-sm-2" value="1" onclick=" calc(this)">1</button>
+                              <button class="btn btn-primary col-sm-2" value="2" onclick=" calc(this)">2</button>
+                              <button class="btn btn-primary col-sm-2" value="3" onclick=" calc(this)">3</button>
+                              <button class="btn btn-warning col-sm-2" value="+" onclick=" calc(this)">+</button>
+                              <button class="btn btn-warning col-sm-2" value="-" onclick=" calc(this)">-</button>
+                            </div>
+                          </div>
+
+                          <div class="form-group row">
+                            <div class="col-md-8">
+                              <button class="btn btn-primary btn-zero text-center col-sm-4" value="0"
+                                onclick=" calc(this)">0</button>
+                              <!-- <button class="invisible" value=""></button> -->
+                              <button class="btn btn-warning col-sm-2" value=".">.</button>
+                              <button class="btn btn-success btn-result text-center col-sm-4" onclick="submitValue()" value="=">=</button>
+                              <!-- <button class="invisible" value=""></button> -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ======================================================= ECB Image ============================================================ -->
+          <div class="card">
+            <div class="card-header" id="headingSix">
+              <h4 class="mb-1">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseEcb"
+                  aria-expanded="false" aria-controls="collapseEcb">
+                  Block cipher: Mode of operation demostration
+                </button>
+              </h4>
+            </div>
+            <div id="collapseEcb" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+              <div class="card-body">
+                <form id="ecbform">
+                  <div class="form-group row">
+                    <div class="col-sm-offset-2 col-md-12">
+                      <h3>Encryption of an image using block cipher</h3>
+                    </div>
+                  </div>
+                  <div class="step1">
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <h4>Step 1: Upload a file</h4>
+                        <strong class="text-muted">* File Dimensions</strong>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-sm-offset-2 col-md-10">
+                        <div class="col-md-4">
+                          <label for="fileUpload">Choose File</label>
+                        </div>
+                        <div class="col-md-4">
+                          <input type="file" class="file" name="fileUpload" required>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="step2">
+                    <div class="form-group row">
+                      <div class=" col-sm-offset-2 col-md-12">
+                        <h4>Step 2: Select Encrpytion Mode</h4>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class=" col-sm-offset-2 col-md-6">
+                        <div class="btn-group">
+                          <button type="button" id="aes-ecb-mode" class="btn btn-primary dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Choose Mode
+                          </button>
+                          <div class="dropdown-menu" id="aes-ecb-dropdown">
+                            <a class="dropdown-item" value="cbc">CBC</a>
+                            <a class="dropdown-item" value="cbf">ECB</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class=" col-sm-offset-2 col-md-4">
+                      <button type="submit" class="btn btn-md btn-primary" value="Upload">Upload and Encrypt</button>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-offset col-md-12">
+                      <h4>Step 3: Result</h4>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-offset col-md-4">
+                      <div class="card">
+                        <div class="card-body text-center">
+                          <h4 class="card-title">Before</h4>
+                          <img id="ebc-before-img" class="card-img" alt="...">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-offset col-md-4">
+
+                      <div class="card">
+                        <div class="card-body text-center">
+                          <h4 class="card-title">After</h4>
+                          <img id="ebc-after-img" class="card-img" alt="...">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-offset col-md-4">
+                      <button class="btn btn-md btn-primary" id="block_cipher_working"  data-toggle="modal"
+                      data-target=".bd-example-modal-lg">
+                        Show Working
+                      </button>
+                    </div>
+                  </div>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- ======================================================== PRIME NUMBER GENERATOR ==================================================================== -->
+
+        <div class="card">
+          <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                aria-expanded="false" aria-controls="collapseTwo">
+                Prime number generator
+              </button>
+            </h5>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+              <form>
+                <div class="form-group row">
+                  <div class="col-md-8">
+                    <label for="result">Result</label>
+                    <textarea class="form-control" type="text" id="primeresult" placeholder="" readonly
+                      rows="5"></textarea>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-5">
+                    <label for="lower-limit">Lower Limit</label>
+                    <input type="text" class="form-control" id="lower-limit" aria-describedby="lowerLimit"
+                      placeholder="Enter lower limit">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-5">
+                    <label for="upper-limit">Upper Limit</label>
+                    <input type="text" class="form-control" id="upper-limit" aria-describedby="upperLimit"
+                      placeholder="Enter upper limit">
+                  </div>
+                </div>
+                <button type="button" class="btn btn-primary" onclick=" generate()">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="resultModal">
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalTitle"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="modalbody">
+            <img id="working_img" src="" class="rounded mx-auto d-block">
+            <br>
+            <div id="working_explanation"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+              onclick=" ()=>$('#modal .close').click()">Close</button>
+            <button type="button" class="btn btn-primary" onclick="printExplanation()">Print</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div id="printSection"></div>
+  <!-- Jquery functions -->
+  <script type="text/javascript">
+    $("#aes-dropdown a").on('click', function () {
+      var select = $(this).text();
+      $("#aes-mode").text(select);
+    })
+    $("#aes-ecb-dropdown a").on('click', function () {
+      var select = $(this).text();
+      $("#aes-ecb-mode").text(select);
+    })
+    function calc(c) {
+      $("#resultText").val($("#resultText").val() + c.value);
+    }
+    function cleartext() {
+      $("#resultText").val("");
+    }
+    $("#ecbform").submit(function(evt){	 
+      evt.preventDefault();
+      var formData = new FormData($(this)[0]);
+      formData.append("mode",$("#aes-ecb-mode").text().trim())
+    $.ajax({
+        url: '/upload',
+        type: 'POST',
+        data: formData,
+        async: false,
+        cache: false,
+        contentType: false,
+        enctype: 'multipart/form-data',
+        processData: false,
+        success: function (response) {
+          let filepath = response['result'];
+          let explanation = response['result']['explanation']
+          console.log(response['result']);
+          $('#ebc-before-img').attr("src", "/"+filepath['originalfile']);
+          $("#ebc-after-img").attr("src", "/"+filepath['encryptedfile']);
+          $("#working_img").attr("src","/"+explanation['img']);
+          $("#working_explanation").html(explanation['explanation']);
+          $("#modalTitle").html(explanation['title']);
+        }
+    });
+    return false;
+    });
+
+  </script>
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
